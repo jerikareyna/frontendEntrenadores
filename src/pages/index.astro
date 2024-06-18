@@ -1,16 +1,106 @@
 ---
+import Layout from "../layouts/Layout.astro";
 
+const entrenador = "Pepito";
+const disciplina = "Futbol";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<style>
+  /*Bienvenido*/
+  .welcome {
+    background-color: #fff7aa;
+    padding: 1rem;
+    width: fit-content;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  /*botones*/
+  .container {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    justify-content: center;
+  }
+
+  .icon-container {
+    display: flex;
+    flex-direction: column;
+	text-decoration: none;
+    padding: 2rem;
+    border-radius: 1rem;
+    background-color: #6474ca;
+    width: 250px;
+    height: 250px;
+    text-align: center;
+    justify-content: center;
+    transition: background-color 200ms ease-in-out;
+  }
+
+  .icon-container:hover {
+    background-color: #4b5aad;
+  }
+
+  .icon-container,
+  .p {
+    color: #fff279;
+    font-size: 1.5rem;
+  }
+
+  .material-symbols-rounded {
+    display: block;
+    color: #fff279;
+    font-size: 4rem;
+    margin-block-end: 1rem;
+  }
+  /**************************************/
+
+  .mainContainer {
+    max-width: 100ch;
+
+    margin: auto;
+  }
+</style>
+
+<Layout title="Inicio" description="descripcion de inicio">
+  <div class="mainContainer">
+    <div class="welcome">
+      <p>Bienvenido, {entrenador}</p>
+      <p>Disciplina: {disciplina}</p>
+    </div>
+
+    <ul class="container">
+      <a class="icon-container" href="/html/mis-categorias.html">
+        <span class="material-symbols-rounded"> category </span>
+        <p>Mis categorías</p>
+      </a>
+
+      <a class="icon-container">
+        <span class="material-symbols-rounded"> campaign </span>
+        <p>Comunicados</p>
+      </a>
+
+      <a class="icon-container">
+        <span class="material-symbols-rounded"> format_list_bulleted </span>
+        <p>Reportes</p>
+	  </a>
+    </ul>
+  </div>
+</Layout>
+
+<script>
+  const link_api = "http://union.app.informaticapp.com:8053/apispring/alumnos";
+
+  async function get(url) {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+  }
+
+  get(link_api);
+</script>
