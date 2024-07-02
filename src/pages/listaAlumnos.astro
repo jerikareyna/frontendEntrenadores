@@ -5,30 +5,36 @@ import Layout from "../layouts/Layout.astro";
 <style></style>
 
 <Layout>
-  <table class="attendance-table">
-    <thead>
-      <tr>
-        <th>Nombre y Apellido</th>
-        <th>Asistencia</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <span>Juan Pérez</span>
-        </td>
-        <td>
-          <button class="attendance-button">
-            <span class="material-symbols-rounded">check</span>
-          </button>
-        </td>
-      </tr>
-      <!-- Agrega más filas para otros alumnos -->
-    </tbody>
-  </table>
+  <div id="userContent">
+    <table class="attendance-table">
+      <thead>
+        <tr>
+          <th>Nombre y Apellido</th>
+          <th>Asistencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <span>Juan Pérez</span>
+          </td>
+          <td>
+            <button class="attendance-button">
+              <span class="material-symbols-rounded">check</span>
+            </button>
+          </td>
+        </tr>
+        <!-- Agrega más filas para otros alumnos -->
+      </tbody>
+    </table>
+  </div>
 </Layout>
 
 <script>
+  import AuthManager from "../scripts/AuthManager.ts";
+  const authManager = new AuthManager();
+
+  const userContent = document.getElementById("userContent")
   const attendanceButtons = document.querySelectorAll(".attendance-button");
 
   attendanceButtons.forEach((button) => {
@@ -44,4 +50,6 @@ import Layout from "../layouts/Layout.astro";
       button.innerHTML = iconStates[currentIconIndex];
     });
   });
+
+  authManager.checkAuthenticationAndReplaceContent(userContent);
 </script>
