@@ -7,7 +7,7 @@ import Layout from "../layouts/Layout.astro";
     position: fixed;
     height: 100%;
     width: 260px;
-    background: #1a1364;
+    background: #1b6dc1;
     padding: 15px;
     z-index: 99;
   }
@@ -71,7 +71,7 @@ import Layout from "../layouts/Layout.astro";
     width: 100%;
     top: 0;
     right: calc(-100% - 26px);
-    background: #191266;
+    background: #1b6dc1;
     display: none;
   }
   .show-submenu ~ .submenu {
@@ -98,10 +98,10 @@ import Layout from "../layouts/Layout.astro";
   }
   .navbar {
     position: fixed;
-    color: #665bff;
+    color: #1b6dc1;
     padding: 15px 20px;
     font-size: 25px;
-    background: #fcff56;
+    background: #f1d246;
     cursor: pointer;
   }
   .navbar #sidebar-close {
@@ -116,10 +116,18 @@ import Layout from "../layouts/Layout.astro";
     z-index: 100;
     background: #e7f2fd;
   }
+
+  .main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
   .main h1 {
-    color: #11101d;
-    font-size: 40px;
+    color: #1b6dc1;
+    font-size: 50px;
     text-align: center;
+    margin-top: 1rem;
   }
 </style>
 
@@ -129,80 +137,105 @@ import Layout from "../layouts/Layout.astro";
     <div class="menu-content">
       <ul class="menu-items">
         <li class="item">
-          <div class="submenu-item level-1"> <span>Lista de Alumnos</span>
+          <div class="submenu-item">
+            <span>Lista de Alumnos</span>
             <i class="fa-solid fa-chevron-right"></i>
           </div>
-          <ul class="menu-items submenu level-1">
-            <div class="menu-title level-1"> <i class="fa-solid fa-chevron-left"></i>
+          <ul class="menu-items submenu">
+            <div class="menu-title">
+              <i class="fa-solid fa-chevron-left"></i>
               Disciplinas
             </div>
             <li class="item">
-              <div class="submenu-item level-2"> <span>Fútbol</span>
-                <i class="fa-solid fa-chevron-right"></i>
-              </div>
-              <ul class="menu-items submenu level-2">
-                <div class="menu-title level-2"> <i class="fa-solid fa-chevron-left"></i>
-                  Categorías
-                </div>
-                <li class="item"> 
-                  <div class="submenu-item level-3"> <span>Sub 8</span>
-                    <i class="fa-solid fa-chevron-right"></i>
-                  </div>
-                  <ul class="menu-items submenu level-3">
-                    <div class="menu-title level-3"> <i class="fa-solid fa-chevron-left"></i>
-                      Grupos
-                    </div>
-                    <li class="item"> <a href="#">Grupo A</a> </li>
-                    <li class="item"> <a href="#">Grupo B</a> </li>
-                  </ul>
-                </li>
-                {/* Repite para otras categorías de Fútbol */}
-              </ul>
+              <a href="/categoria">Voley</a>
             </li>
-            {/* Repite para otras disciplinas */}
+            <li class="item">
+              <a href="#">Basquet</a>
+            </li>
+            <li class="item">
+              <a href="#">Futbol</a>
+            </li>
           </ul>
         </li>
-  
-        {/* Repite para otros items del menú principal */}
+
+        <li class="item">
+          <div class="submenu-item">
+            <span>Actividades</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+          <ul class="menu-items submenu">
+            <div class="menu-title">
+              <i class="fa-solid fa-chevron-left"></i>
+              Your submenu title
+            </div>
+            <li class="item">
+              <a href="#">First sublink</a>
+            </li>
+            <li class="item">
+              <a href="#">First sublink</a>
+            </li>
+            <li class="item">
+              <a href="#">First sublink</a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="item">
+          <div class="submenu-item">
+            <span>Reportes</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+          <ul class="menu-items submenu">
+            <div class="menu-title">
+              <i class="fa-solid fa-chevron-left"></i>
+              Your submenu title
+            </div>
+            <li class="item">
+              <a href="#">First sublink</a>
+            </li>
+            <li class="item">
+              <a href="#">First sublink</a>
+            </li>
+            <li class="item">
+              <a href="#">First sublink</a>
+            </li>
+          </ul>
+        </li>
+
       </ul>
     </div>
   </nav>
   <nav class="navbar">
     <i class="fa-solid fa-bars" id="sidebar-close"></i>
   </nav>
-  <main class="main">
-    <h1>Admin Dashboard Content</h1>
-  </main>
+  <div class="main">
+    <img src="/logo.png" >
+    <h1>Bienvenido Delfin Reyna</h1>
+  </div>
 </Layout>
-<script lang="js">
+<script>
   const sidebar = document.querySelector(".sidebar");
   const sidebarClose = document.querySelector("#sidebar-close");
+  const menu = document.querySelector(".menu-content");
   const menuItems = document.querySelectorAll(".submenu-item");
-
-  sidebarClose.addEventListener("click", () => sidebar.classList.toggle("close"));
-
-  menuItems.forEach(item => {
-    item.addEventListener("click", (event) => {
-      event.stopPropagation(); // Evita que el evento se propague al padre
-      const submenu = item.nextElementSibling; // Obtiene el submenú directo
-      const level = item.classList.contains('level-1') ? 1 : 
-                    item.classList.contains('level-2') ? 2 : 3; // Obtiene el nivel
-
-      // Cierra todos los submenús abiertos del mismo nivel EXCEPTO el actual
-      const parentMenu = item.closest('.submenu'); 
-      if (parentMenu) {
-        const siblingSubmenus = parentMenu.querySelectorAll(`.submenu.level-${level}`);
-        siblingSubmenus.forEach(sibling => {
-          if (sibling !== submenu) {
-            sibling.style.display = 'none';
-            sibling.previousElementSibling.classList.remove('show-submenu');
-          }
-        });
-      }
-
-      // Alterna la visualización del submenú actual
-      submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
-      item.classList.toggle('show-submenu');
+  const subMenuTitles = document.querySelectorAll(".submenu .menu-title");
+  sidebarClose.addEventListener("click", () =>
+    sidebar.classList.toggle("close")
+  );
+  menuItems.forEach((item, index) => {
+    item.addEventListener("click", () => {
+      menu.classList.add("submenu-active");
+      item.classList.add("show-submenu");
+      menuItems.forEach((item2, index2) => {
+        if (index !== index2) {
+          item2.classList.remove("show-submenu");
+        }
+      });
+    });
+  });
+  subMenuTitles.forEach((title) => {
+    title.addEventListener("click", () => {
+      menu.classList.remove("submenu-active");
     });
   });
 </script>
