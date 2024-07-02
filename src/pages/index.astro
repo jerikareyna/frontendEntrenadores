@@ -1,106 +1,208 @@
 ---
 import Layout from "../layouts/Layout.astro";
-
-const entrenador = "Pepito";
-const disciplina = "Futbol";
 ---
 
 <style>
-  /*Bienvenido*/
-  .welcome {
-    background-color: #fff7aa;
-    padding: 1rem;
-    width: fit-content;
-    border-radius: 1rem;
-    margin-bottom: 2rem;
+  .sidebar {
+    position: fixed;
+    height: 100%;
+    width: 260px;
+    background: #1a1364;
+    padding: 15px;
+    z-index: 99;
   }
-
-  /*botones*/
-  .container {
-    display: flex;
+  .logo {
+    font-size: 25px;
+    padding: 0 15px;
+  }
+  .sidebar a {
+    color: #fff;
+    text-decoration: none;
+  }
+  .menu-content {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin-top: 40px;
+    overflow-y: scroll;
+  }
+  .menu-content::-webkit-scrollbar {
+    display: none;
+  }
+  .menu-items {
+    height: 100%;
+    width: 100%;
     list-style: none;
-    gap: 2rem;
-    justify-content: center;
+    transition: all 0.4s ease;
   }
-
-  .icon-container {
+  .submenu-active .menu-items {
+    transform: translateX(-56%);
+  }
+  .menu-title {
+    color: #fff;
+    font-size: 14px;
+    padding: 15px 20px;
+  }
+  .item a,
+  .submenu-item {
+    padding: 16px;
+    display: inline-block;
+    width: 100%;
+    border-radius: 12px;
+  }
+  .item i {
+    font-size: 12px;
+  }
+  .item a:hover,
+  .submenu-item:hover,
+  .submenu .menu-title:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  .submenu-item {
     display: flex;
-    flex-direction: column;
-	text-decoration: none;
-    padding: 2rem;
-    border-radius: 1rem;
-    background-color: #6474ca;
-    width: 250px;
-    height: 250px;
-    text-align: center;
-    justify-content: center;
-    transition: background-color 200ms ease-in-out;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    cursor: pointer;
   }
-
-  .icon-container:hover {
-    background-color: #4b5aad;
+  .submenu {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: calc(-100% - 26px);
+    background: #191266;
+    display: none;
   }
-
-  .icon-container,
-  .p {
-    color: #fff279;
-    font-size: 1.5rem;
-  }
-
-  .material-symbols-rounded {
+  .show-submenu ~ .submenu {
     display: block;
-    color: #fff279;
-    font-size: 4rem;
-    margin-block-end: 1rem;
   }
-  /**************************************/
-
-  .mainContainer {
-    max-width: 100ch;
-
-    margin: auto;
+  .submenu .menu-title {
+    border-radius: 12px;
+    cursor: pointer;
+  }
+  .submenu .menu-title i {
+    margin-right: 10px;
+  }
+  .navbar,
+  .main {
+    left: 260px;
+    width: calc(100% - 260px);
+    transition: all 0.5s ease;
+    z-index: 1000;
+  }
+  .sidebar.close ~ .navbar,
+  .sidebar.close ~ .main {
+    left: 0;
+    width: 100%;
+  }
+  .navbar {
+    position: fixed;
+    color: #665bff;
+    padding: 15px 20px;
+    font-size: 25px;
+    background: #fcff56;
+    cursor: pointer;
+  }
+  .navbar #sidebar-close {
+    cursor: pointer;
+  }
+  .main {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    z-index: 100;
+    background: #e7f2fd;
+  }
+  .main h1 {
+    color: #11101d;
+    font-size: 40px;
+    text-align: center;
   }
 </style>
 
-<Layout title="Inicio" description="descripcion de inicio">
-  <div class="mainContainer">
-    <div class="welcome">
-      <p>Bienvenido, {entrenador}</p>
-      <p>Disciplina: {disciplina}</p>
+<Layout>
+  <nav class="sidebar">
+    <a href="#" class="logo">Menú</a>
+    <div class="menu-content">
+      <ul class="menu-items">
+        <li class="item">
+          <div class="submenu-item level-1"> <span>Lista de Alumnos</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+          <ul class="menu-items submenu level-1">
+            <div class="menu-title level-1"> <i class="fa-solid fa-chevron-left"></i>
+              Disciplinas
+            </div>
+            <li class="item">
+              <div class="submenu-item level-2"> <span>Fútbol</span>
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+              <ul class="menu-items submenu level-2">
+                <div class="menu-title level-2"> <i class="fa-solid fa-chevron-left"></i>
+                  Categorías
+                </div>
+                <li class="item"> 
+                  <div class="submenu-item level-3"> <span>Sub 8</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </div>
+                  <ul class="menu-items submenu level-3">
+                    <div class="menu-title level-3"> <i class="fa-solid fa-chevron-left"></i>
+                      Grupos
+                    </div>
+                    <li class="item"> <a href="#">Grupo A</a> </li>
+                    <li class="item"> <a href="#">Grupo B</a> </li>
+                  </ul>
+                </li>
+                {/* Repite para otras categorías de Fútbol */}
+              </ul>
+            </li>
+            {/* Repite para otras disciplinas */}
+          </ul>
+        </li>
+  
+        {/* Repite para otros items del menú principal */}
+      </ul>
     </div>
-
-    <ul class="container">
-      <a class="icon-container" href="/html/mis-categorias.html">
-        <span class="material-symbols-rounded"> category </span>
-        <p>Mis categorías</p>
-      </a>
-
-      <a class="icon-container">
-        <span class="material-symbols-rounded"> campaign </span>
-        <p>Comunicados</p>
-      </a>
-
-      <a class="icon-container">
-        <span class="material-symbols-rounded"> format_list_bulleted </span>
-        <p>Reportes</p>
-	  </a>
-    </ul>
-  </div>
+  </nav>
+  <nav class="navbar">
+    <i class="fa-solid fa-bars" id="sidebar-close"></i>
+  </nav>
+  <main class="main">
+    <h1>Admin Dashboard Content</h1>
+  </main>
 </Layout>
+<script lang="js">
+  const sidebar = document.querySelector(".sidebar");
+  const sidebarClose = document.querySelector("#sidebar-close");
+  const menuItems = document.querySelectorAll(".submenu-item");
 
-<script>
-  const link_api = "http://union.app.informaticapp.com:8053/apispring/alumnos";
+  sidebarClose.addEventListener("click", () => sidebar.classList.toggle("close"));
 
-  async function get(url) {
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+  menuItems.forEach(item => {
+    item.addEventListener("click", (event) => {
+      event.stopPropagation(); // Evita que el evento se propague al padre
+      const submenu = item.nextElementSibling; // Obtiene el submenú directo
+      const level = item.classList.contains('level-1') ? 1 : 
+                    item.classList.contains('level-2') ? 2 : 3; // Obtiene el nivel
+
+      // Cierra todos los submenús abiertos del mismo nivel EXCEPTO el actual
+      const parentMenu = item.closest('.submenu'); 
+      if (parentMenu) {
+        const siblingSubmenus = parentMenu.querySelectorAll(`.submenu.level-${level}`);
+        siblingSubmenus.forEach(sibling => {
+          if (sibling !== submenu) {
+            sibling.style.display = 'none';
+            sibling.previousElementSibling.classList.remove('show-submenu');
+          }
+        });
+      }
+
+      // Alterna la visualización del submenú actual
+      submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+      item.classList.toggle('show-submenu');
     });
-    const data = await response.json();
-    console.log(data);
-  }
-
-  get(link_api);
+  });
 </script>
